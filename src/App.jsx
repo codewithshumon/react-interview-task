@@ -8,10 +8,12 @@ import BusinessUnits from "./pages/BusinessUnits";
 import Sustainability from "./pages/Sustainability";
 import MediaCenter from "./pages/MediaCenter";
 import Other from "./pages/Other";
+import Header from "./components/landing/Header";
 
 function App() {
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
