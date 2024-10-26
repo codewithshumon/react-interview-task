@@ -1,4 +1,3 @@
-import CustomSlider from "../components/sliders/coustom-slider/CustomSlider";
 import SingleSliderSwipeMood from "../components/sliders/SliderSingleSwipe/SingleSliderSwipeMood";
 import SliderSingleSwipe from "../components/sliders/SliderSingleSwipe/SliderSingleSwipe";
 
@@ -17,12 +16,6 @@ const SliderPage = () => {
             Single Item Slider with Swipe Mood
           </h1>
           <SingleSliderSwipeMood />
-        </div>
-        <div className=" w-full h-full">
-          <h1 className=" w-full h-[20vh] flex justify-center items-center text-[36px] font-extrabold">
-            Custom Slider with Swipe Mood
-          </h1>
-          <CustomSlider />
         </div>
       </div>
     </div>

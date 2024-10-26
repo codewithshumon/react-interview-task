@@ -9,6 +9,7 @@ const Header = () => {
     { name: "Media Center", path: "/media-center" },
     { name: "Career", path: "/career" },
     { name: "Slider Page", path: "/slider-page" },
+    { name: "Custom Slider", path: "/custom-slider" },
   ];
 
   return (
@@ -17,7 +18,10 @@ const Header = () => {
         <ul className="flex space-x-6">
           {menus.map((menu, index) => (
             <li key={index}>
-              <Link to={menu.path} className="text-white hover:text-gray-300">
+              <Link
+                to={menu.path}
+                className=" text-yellow-400 hover:text-gray-300"
+              >
                 {" "}
                 {menu.name}
               </Link>
