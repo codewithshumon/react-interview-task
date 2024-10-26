@@ -10,7 +10,7 @@ import fanta from "../../../assets/videos/fanta.mp4";
 import nike from "../../../assets/videos/nike.mp4";
 import sweet from "../../../assets/videos/sweet.mp4";
 
-const LandingPageVideoMulti = () => {
+const SliderSingleSwipe = () => {
   const videos = [
     pepsiVideo,
     cocaColaVideo,
@@ -92,9 +92,14 @@ const LandingPageVideoMulti = () => {
   const styles = {
     landingPage: {
       position: "relative",
+      // display: "flex",
+      // flexDirection: "row",
+      // justifyContent: "center",
+      // alignItems: "center",
       height: "100vh",
       width: "100vw",
       overflow: "hidden",
+      padding: "10%",
     },
     videoContainer: {
       display: "flex",
@@ -115,7 +120,7 @@ const LandingPageVideoMulti = () => {
       objectFit: "cover",
     },
     overlay: {
-      position: "fixed", // Center on the viewport
+      position: "absolute", // Center on the viewport
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
@@ -124,6 +129,7 @@ const LandingPageVideoMulti = () => {
       alignItems: "center",
       width: "100%",
       padding: "0 20px",
+      // zIndex: "100",
     },
     arrow: {
       backgroundColor: "rgba(255, 255, 255, 0.5)",
@@ -134,7 +140,7 @@ const LandingPageVideoMulti = () => {
     },
     progressContainer: {
       position: "absolute",
-      bottom: "20px",
+      top: "50%",
       width: "100%",
       display: "flex",
       justifyContent: "center",
@@ -211,7 +217,7 @@ const LandingPageVideoMulti = () => {
   );
 };
 
-export default LandingPageVideoMulti;
+export default SliderSingleSwipe;
 
 // import { useState, useEffect, useRef } from "react";
 

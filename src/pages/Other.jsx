@@ -1,6 +1,6 @@
-import LandingPageVideo from "../components/landing/LandingPageVideo";
-import LandingPageVideoMulti from "../components/landing/LandingPageVideoMulti";
-import LandingPageYT from "../components/landing/LandingPageYT";
+import LandingPageVideo from "../components/other/LandingPageVideo";
+import LandingPageVideoMulti from "../components/other/LandingPageVideoMulti";
+import LandingPageYT from "../components/other/LandingPageYT";
 
 const Other = () => {
   return (

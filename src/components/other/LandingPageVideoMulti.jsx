@@ -115,7 +115,7 @@ const LandingPageVideoMulti = () => {
       objectFit: "cover",
     },
     overlay: {
-      position: "fixed", // Center on the viewport
+      position: "absolute", // Center on the viewport
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
