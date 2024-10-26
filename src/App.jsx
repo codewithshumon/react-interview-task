@@ -9,6 +9,7 @@ import Sustainability from "./pages/Sustainability";
 import MediaCenter from "./pages/MediaCenter";
 import Other from "./pages/Other";
 import Header from "./components/landing/Header";
+import SliderPage from "./pages/SliderPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/career" element={<Career />} />
         <Route path="/other" element={<Other />} />
+        <Route path="/slider-page" element={<SliderPage />} />
       </Routes>
     </BrowserRouter>
   );

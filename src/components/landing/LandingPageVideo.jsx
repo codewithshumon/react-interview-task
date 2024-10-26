@@ -3,9 +3,25 @@ import { useState, useEffect, useRef } from "react";
 import pepsiVideo from "../../assets/videos/pepsi.mp4";
 import cocaColaVideo from "../../assets/videos/coca-cola.mp4";
 import restaurantVideo from "../../assets/videos/restaurant.mp4";
+import cake from "../../assets/videos/cake.mp4";
+import cofee from "../../assets/videos/cofee.mp4";
+import blender from "../../assets/videos/blender.mp4";
+import fanta from "../../assets/videos/fanta.mp4";
+import nike from "../../assets/videos/nike.mp4";
+import sweet from "../../assets/videos/sweet.mp4";
 
 const LandingPageVideo = () => {
-  const videos = [pepsiVideo, cocaColaVideo, restaurantVideo];
+  const videos = [
+    pepsiVideo,
+    cocaColaVideo,
+    restaurantVideo,
+    cake,
+    cofee,
+    blender,
+    fanta,
+    nike,
+    sweet,
+  ];
 
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);

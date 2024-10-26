@@ -8,6 +8,7 @@ const Header = () => {
     { name: "Sustainability", path: "/sustainability" },
     { name: "Media Center", path: "/media-center" },
     { name: "Career", path: "/career" },
+    { name: "Slider Page", path: "/slider-page" },
   ];
 
   return (
