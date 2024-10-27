@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from "react";
-
+import { useState, useEffect } from "react";
 import pepsiVideo from "../../../assets/videos/pepsi.mp4";
 import cocaColaVideo from "../../../assets/videos/coca-cola.mp4";
 import restaurantVideo from "../../../assets/videos/restaurant.mp4";
@@ -23,10 +22,9 @@ const CustomSliderArrowAutoNav = () => {
 
   const [currentVideoIndex, setCurrentVideoIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [isDragging, setIsDragging] = useState(false); // Track dragging state
-  const [startX, setStartX] = useState(0); // Initial mouse/touch position
-  const [currentTranslateX, setCurrentTranslateX] = useState(0); // Current translateX value
-  const videoContainerRef = useRef(null); // Ref for video container
+  const [dragStart, setDragStart] = useState(null);
+  const [dragDistance, setDragDistance] = useState(0);
+  const slideThreshold = 50; // pixels to trigger slide
 
   // Auto-move the slider every 5 seconds
   useEffect(() => {
@@ -34,7 +32,7 @@ const CustomSliderArrowAutoNav = () => {
       handleNext();
     }, 5000);
 
-    return () => clearInterval(interval); // Clear interval on component unmount
+    return () => clearInterval(interval);
   }, [currentVideoIndex]);
 
   const handleNext = () => {
@@ -49,10 +47,33 @@ const CustomSliderArrowAutoNav = () => {
 
   const handleDotClick = (index) => {
     setIsTransitioning(true);
-    setCurrentVideoIndex(index + 1); // Adjust for extra cloned slides
+    setCurrentVideoIndex(index + 1);
   };
 
-  // Loop logic to reset index without transition after reaching the ends
+  // Drag functionality handlers
+  const handleMouseDown = (e) => {
+    setDragStart(e.clientX);
+    setIsTransitioning(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (dragStart !== null) {
+      const distance = e.clientX - dragStart;
+      setDragDistance(distance);
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (Math.abs(dragDistance) > slideThreshold) {
+      dragDistance < 0 ? handleNext() : handlePrevious();
+    }
+
+    setDragStart(null);
+    setDragDistance(0);
+    setIsTransitioning(true);
+  };
+
+  // Reset index when reaching the end or start
   useEffect(() => {
     if (isTransitioning) {
       if (currentVideoIndex === videos.length + 1) {
@@ -69,57 +90,6 @@ const CustomSliderArrowAutoNav = () => {
     }
   }, [currentVideoIndex, isTransitioning, videos.length]);
 
-  // Handle drag start
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    setStartX(e.clientX); // For mouse
-  };
-
-  const handleTouchStart = (e) => {
-    setIsDragging(true);
-    setStartX(e.touches[0].clientX); // For touch
-  };
-
-  // Handle drag end
-  const handleMouseUp = () => {
-    if (isDragging) {
-      setIsDragging(false);
-      handleDragEnd();
-    }
-  };
-
-  const handleTouchEnd = () => {
-    if (isDragging) {
-      setIsDragging(false);
-      handleDragEnd();
-    }
-  };
-
-  // Handle drag move
-  const handleMouseMove = (e) => {
-    if (isDragging) {
-      const deltaX = e.clientX - startX; // Calculate the difference
-      setCurrentTranslateX(deltaX); // Update current translateX
-    }
-  };
-
-  const handleTouchMove = (e) => {
-    if (isDragging) {
-      const deltaX = e.touches[0].clientX - startX; // Calculate the difference
-      setCurrentTranslateX(deltaX); // Update current translateX
-    }
-  };
-
-  // Handle drag end logic
-  const handleDragEnd = () => {
-    if (currentTranslateX < -100) {
-      handleNext(); // Move to next video if dragged left
-    } else if (currentTranslateX > 100) {
-      handlePrevious(); // Move to previous video if dragged right
-    }
-    setCurrentTranslateX(0); // Reset position
-  };
-
   const styles = {
     videoContainer: {
       display: "flex",
@@ -127,8 +97,8 @@ const CustomSliderArrowAutoNav = () => {
       height: "100%",
       transition: isTransitioning ? "transform 0.5s ease-in-out" : "none",
       transform: `translateX(-${
-        (currentVideoIndex * 100) / (videos.length + 2) +
-        (currentTranslateX / window.innerWidth) * 100 // Use currentTranslateX for drag effect
+        (currentVideoIndex * 100) / (videos.length + 2) -
+        (dragDistance / window.innerWidth) * 100
       }%)`,
     },
     bgVideo: {
@@ -141,13 +111,9 @@ const CustomSliderArrowAutoNav = () => {
   return (
     <div
       className="relative w-full h-full max-w-[1440px] mx-auto overflow-hidden"
-      onMouseDown={handleMouseDown} // Attach mouse down event
-      onMouseUp={handleMouseUp} // Attach mouse up event
-      onMouseMove={handleMouseMove} // Attach mouse move event
-      onTouchStart={handleTouchStart} // Attach touch start event
-      onTouchEnd={handleTouchEnd} // Attach touch end event
-      onTouchMove={handleTouchMove} // Attach touch move event
-      ref={videoContainerRef} // Set ref for the video container
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
     >
       <div className="relative w-[100%] h-[50vh] bg-yellow-400"></div>
       <div

@@ -11,6 +11,7 @@ import Other from "./pages/Other";
 import Header from "./components/landing/Header";
 import SliderPage from "./pages/SliderPage";
 import CustomSlider from "./pages/CustomSlider";
+import CustomCard from "./pages/CustomCard";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/other" element={<Other />} />
         <Route path="/slider-page" element={<SliderPage />} />
         <Route path="/custom-slider" element={<CustomSlider />} />
+        <Route path="/custom-card" element={<CustomCard />} />
       </Routes>
     </BrowserRouter>
   );

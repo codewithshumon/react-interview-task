@@ -10,6 +10,7 @@ const Header = () => {
     { name: "Career", path: "/career" },
     { name: "Slider Page", path: "/slider-page" },
     { name: "Custom Slider", path: "/custom-slider" },
+    { name: "Custom Card", path: "/custom-card" },
   ];
 
   return (
