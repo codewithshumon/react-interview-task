@@ -129,7 +129,6 @@ const SliderSingleSwipe = () => {
       alignItems: "center",
       width: "100%",
       padding: "0 20px",
-      // zIndex: "100",
     },
     arrow: {
       backgroundColor: "rgba(255, 255, 255, 0.5)",
