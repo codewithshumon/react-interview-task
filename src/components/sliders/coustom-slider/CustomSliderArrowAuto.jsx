@@ -9,7 +9,7 @@ import blender from "../../../assets/videos/blender.mp4";
 import fanta from "../../../assets/videos/fanta.mp4";
 import nike from "../../../assets/videos/nike.mp4";
 
-const CustomSliderArrowAutoNav = () => {
+const CustomSliderArrowAuto = () => {
   const videos = [
     pepsiVideo,
     cocaColaVideo,
@@ -28,10 +28,10 @@ const CustomSliderArrowAutoNav = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       handleNext();
-    }, 5000);
+    }, 5000); // 5000 milliseconds = 5 seconds
 
     return () => clearInterval(interval); // Clear interval on component unmount
-  }, [currentVideoIndex]);
+  }, [currentVideoIndex]); // Restart interval on index change
 
   const handleNext = () => {
     setIsTransitioning(true);
@@ -43,20 +43,17 @@ const CustomSliderArrowAutoNav = () => {
     setCurrentVideoIndex((prevIndex) => prevIndex - 1);
   };
 
-  const handleDotClick = (index) => {
-    setIsTransitioning(true);
-    setCurrentVideoIndex(index + 1); // Adjust for extra cloned slides
-  };
-
   // Loop logic to reset index without transition after reaching the ends
   useEffect(() => {
     if (isTransitioning) {
       if (currentVideoIndex === videos.length + 1) {
+        // After reaching the cloned last video, jump back to first video
         setTimeout(() => {
           setIsTransitioning(false);
           setCurrentVideoIndex(1);
-        }, 500);
+        }, 500); // Delay must match the transition time
       } else if (currentVideoIndex === 0) {
+        // After reaching the cloned first video, jump to last video
         setTimeout(() => {
           setIsTransitioning(false);
           setCurrentVideoIndex(videos.length);
@@ -68,7 +65,7 @@ const CustomSliderArrowAutoNav = () => {
   const styles = {
     videoContainer: {
       display: "flex",
-      width: `${(videos.length + 2) * 100}%`,
+      width: `${(videos.length + 2) * 100}%`, // Account for extra cloned slides
       height: "100%",
       transition: isTransitioning ? "transform 0.5s ease-in-out" : "none",
       transform: `translateX(-${
@@ -83,10 +80,10 @@ const CustomSliderArrowAutoNav = () => {
   };
 
   return (
-    <div className="relative w-full h-full max-w-[1440px] mx-auto overflow-hidden">
-      <div className="relative w-[100%] h-[50vh] bg-yellow-400"></div>
+    <div className=" relative w-full h-full max-w-[1440px] mx-auto overflow-hidden ">
+      <div className=" relative w-[100%] h-[50vh] bg-blue-400"></div>
       <div
-        className="relative w-[100%] h-[100vh]"
+        className="relative w-[100%] h-[100vh] "
         style={styles.videoContainer}
       >
         <div className="relative w-full max-w-[1440px] h-full flex-grow flex-shrink basis-full">
@@ -108,29 +105,15 @@ const CustomSliderArrowAutoNav = () => {
               autoPlay
               loop
               muted
-              className="relative w-full max-w-[1440px] h-full flex-grow flex-shrink basis-full"
+              className="relative w-full  max-w-[1440px] h-full flex-grow flex-shrink basis-full"
             />
           </div>
         ))}
-        <div className="relative w-full max-w-[1440px] h-full flex-grow flex-shrink basis-full">
+        <div className="relative w-full  max-w-[1440px] h-full flex-grow flex-shrink basis-full">
           <video src={videos[0]} autoPlay loop muted style={styles.bgVideo} />
         </div>
       </div>
 
-      {/* Navigation Dots */}
-      <div className="absolute w-full top-[60%] flex justify-center gap-5 z-[10]">
-        {videos.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => handleDotClick(i)}
-            className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-              currentVideoIndex - 1 === i ? "bg-yellow-500" : "bg-red-300"
-            }`}
-          ></button>
-        ))}
-      </div>
-
-      {/* Navigation Arrows */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between items-center w-full px-5 ">
         <button
           className="bg-white/50 border-none text-[25px] cursor-pointer rounded-full w-10 h-10 flex items-center justify-center"
@@ -147,9 +130,9 @@ const CustomSliderArrowAutoNav = () => {
         </button>
       </div>
 
-      <div className="relative w-[100%] h-[50vh] bg-yellow-400"></div>
+      <div className=" relative w-[100%] h-[50vh] bg-blue-400"></div>
     </div>
   );
 };
 
-export default CustomSliderArrowAutoNav;
+export default CustomSliderArrowAuto;
