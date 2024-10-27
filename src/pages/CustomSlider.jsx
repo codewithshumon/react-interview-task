@@ -1,6 +1,7 @@
 import CustomSliderArrow from "../components/sliders/coustom-slider/CustomSliderArrow";
 import CustomSliderArrowAuto from "../components/sliders/coustom-slider/CustomSliderArrowAuto";
 import CustomSliderArrowAutoNav from "../components/sliders/coustom-slider/CustomSliderArrowAutoNav";
+import CustomSliderArrowAutoNavDrag from "../components/sliders/coustom-slider/CustomSliderArrowAutoNavDrag";
 
 const CustomSlider = () => {
   return (
@@ -22,6 +23,12 @@ const CustomSlider = () => {
           Custom Slider with Arrow Auto and Navigation Function Slider
         </h1>
         <CustomSliderArrowAutoNav />
+      </div>
+      <div className=" w-full h-full">
+        <h1 className=" w-full h-[20vh] flex justify-center items-center text-[36px] font-extrabold">
+          Custom Slider with Arrow Auto Navigation and Drag Function Slider
+        </h1>
+        <CustomSliderArrowAutoNavDrag />
       </div>
     </div>
   );
