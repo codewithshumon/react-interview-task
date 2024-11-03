@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useRef } from "react";
 import ProductCard from "../ProductCard";
-import useObserver from "../../../hooks/useObserver";
 
 const CustomCardArrowNextNavPrevLoop = () => {
   const firstItemRef = useRef(null);
+  const lastItemRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsToShow = 4;
-  const { isVisible, position } = useObserver(firstItemRef);
 
   const products = [
     {
@@ -136,20 +135,13 @@ const CustomCardArrowNextNavPrevLoop = () => {
     },
   ];
 
-  // Create cloned products for infinite scrolling
-  const clonedProducts = [
-    ...products.slice(-itemsToShow),
-    ...products,
-    ...products.slice(0, itemsToShow),
-  ];
-
-  const maxIndex = clonedProducts.length / itemsToShow - 1; // Adjusted to account for cloned products
+  const maxIndex = Math.ceil(products.length / itemsToShow) - 1;
 
   const handleNext = () => {
     if (currentIndex < maxIndex) {
       setCurrentIndex((prevIndex) => prevIndex + 1);
     } else {
-      setCurrentIndex(itemsToShow); // Jump to the first original item after the last cloned item
+      setCurrentIndex(0); // Reset to the first item when reaching the end
     }
   };
 
@@ -157,23 +149,15 @@ const CustomCardArrowNextNavPrevLoop = () => {
     if (currentIndex > 0) {
       setCurrentIndex((prevIndex) => prevIndex - 1);
     } else {
-      setCurrentIndex(maxIndex - itemsToShow); // Jump to the last original item before the first cloned item
+      setCurrentIndex(maxIndex); // Jump to the last item if at the start
     }
   };
 
-  console.log("[position]", position);
-  console.log("[isVisible]", isVisible);
-
-  // Handle transition reset
   useEffect(() => {
-    if (currentIndex === itemsToShow + 1) {
-      setTimeout(() => {
-        setCurrentIndex(1); // Reset to the first product in the original list
-      }, 500); // Match with transition duration
-    } else if (currentIndex === maxIndex) {
-      setTimeout(() => {
-        setCurrentIndex(maxIndex - 1); // Reset to the last product in the original list
-      }, 500);
+    if (currentIndex === maxIndex + 1) {
+      setTimeout(() => setCurrentIndex(0), 500);
+    } else if (currentIndex === -1) {
+      setTimeout(() => setCurrentIndex(maxIndex), 500);
     }
   }, [currentIndex]);
 
@@ -182,7 +166,7 @@ const CustomCardArrowNextNavPrevLoop = () => {
       display: "flex",
       transform: `translateX(-${(currentIndex * 100) / itemsToShow}%)`,
       transition: "transform 0.5s ease-in-out",
-      width: `${(clonedProducts.length * 100) / itemsToShow}%`,
+      width: `${(products.length * 100) / itemsToShow}%`,
     },
     navigationLineContainer: {
       position: "relative",
@@ -209,11 +193,17 @@ const CustomCardArrowNextNavPrevLoop = () => {
       </div>
 
       <div className="flex w-full py-10" style={styles.sliderContainer}>
-        {clonedProducts.map((product, index) => (
+        {products.map((product, index) => (
           <div
-            key={index}
+            key={`main-${index}`}
             className="w-1/4 px-2"
-            ref={index === 0 ? firstItemRef : null}
+            ref={
+              index === 0
+                ? firstItemRef
+                : index === products.length - 1
+                ? lastItemRef
+                : null
+            }
           >
             <ProductCard
               image={product.image}
@@ -229,13 +219,14 @@ const CustomCardArrowNextNavPrevLoop = () => {
       {/* Navigation Arrows */}
       <button
         onClick={handlePrevious}
-        className={`absolute left-2 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md`}
+        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
+        // disabled={firstItemVisible}
       >
         &lt;
       </button>
       <button
         onClick={handleNext}
-        className={`absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md`}
+        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md"
       >
         &gt;
       </button>
