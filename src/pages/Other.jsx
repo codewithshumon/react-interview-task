@@ -1,7 +1,7 @@
+import CustomCardTest from "../components/other/CustomCardTest";
 import LandingPageVideo from "../components/other/LandingPageVideo";
 import LandingPageVideoMulti from "../components/other/LandingPageVideoMulti";
 import LandingPageYT from "../components/other/LandingPageYT";
-import TrackDivVisibility from "../components/other/TrackDivVisibility";
 
 const Other = () => {
   return (
@@ -12,7 +12,7 @@ const Other = () => {
       <h1 className="text-3xl font-bold underline ">Hello world!</h1>
       <LandingPageVideoMulti />
       <h1 className="text-3xl font-bold underline ">Track Div Visibility</h1>
-      <TrackDivVisibility />
+      <CustomCardTest />
     </div>
   );
 };

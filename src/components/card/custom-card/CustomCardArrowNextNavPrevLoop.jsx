@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useRef } from "react";
 import ProductCard from "../ProductCard";
+import useObserver from "../../../hooks/useObserver";
 
 const CustomCardArrowNextNavPrevLoop = () => {
+  const firstItemRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsToShow = 4;
-
-  const firstItemRef = useRef(null);
-  const [position, setPosition] = useState("");
+  const { isVisible, position } = useObserver(firstItemRef);
 
   const products = [
     {
@@ -136,38 +136,6 @@ const CustomCardArrowNextNavPrevLoop = () => {
     },
   ];
 
-  //ovserving the
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const { boundingClientRect } = entry;
-
-        // Check if the first item is intersecting the viewport
-        if (entry.isIntersecting) {
-          setPosition("visible");
-        } else {
-          // Check if the item is off the left or right side of the viewport
-          if (boundingClientRect.right < 0) {
-            setPosition("left"); // First item is off to the left
-          } else if (boundingClientRect.left > window.innerWidth) {
-            setPosition("right"); // First item is off to the right
-          }
-        }
-      });
-    });
-
-    if (firstItemRef.current) {
-      observer.observe(firstItemRef.current);
-    }
-
-    // Cleanup observer on component unmount
-    return () => {
-      if (firstItemRef.current) {
-        observer.unobserve(firstItemRef.current);
-      }
-    };
-  }, []);
-
   // Create cloned products for infinite scrolling
   const clonedProducts = [
     ...products.slice(-itemsToShow),
@@ -194,12 +162,7 @@ const CustomCardArrowNextNavPrevLoop = () => {
   };
 
   console.log("[position]", position);
-  // console.log("[currentIndex]", currentIndex);
-  // console.log("[maxIndex]", maxIndex);
-  // console.log("[clonedProducts.length]", clonedProducts.length);
-  // console.log("[products.slice(-itemsToShow)]", products.slice(-itemsToShow));
-  // console.log("products.slice(0, itemsToShow)", products.slice(0, itemsToShow));
-  // console.log("[products]", products);
+  console.log("[isVisible]", isVisible);
 
   // Handle transition reset
   useEffect(() => {
