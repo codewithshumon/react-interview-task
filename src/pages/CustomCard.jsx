@@ -1,7 +1,10 @@
 import CustomCardArrow from "../components/card/custom-card/CustomCardArrow";
 import CustomCardArrowNavigation from "../components/card/custom-card/CustomCardArrowNavigation";
-import CustomCardArrowNextNavPrevLoop from "../components/card/custom-card/CustomCardArrowNextNavPrevLoop";
 import CustomCardArrowNextPrev from "../components/card/custom-card/CustomCardArrowNextPrev";
+import CustomCardArrowNextNavPrevLoop from "../components/card/custom-card/CustomCardArrowNextNavPrevLoop";
+
+import CustomCardArrowNextNavPrevInfiniteLoop from "../components/card/custom-card/CustomCardArrowNextNavPrevInfiniteLoop";
+import CustomCardArrowNextPrevInfiniteLoop from "../components/card/custom-card/CustomCardArrowNextPrevInfiniteLoop";
 
 const CustomCard = () => {
   return (
@@ -29,6 +32,19 @@ const CustomCard = () => {
           Custom Card with Arrow Next and Previous with Navigation Loop Function
         </h1>
         <CustomCardArrowNextNavPrevLoop />
+      </div>
+      <div className=" w-full h-full">
+        <h1 className=" w-full h-[20vh] flex justify-center items-center text-[36px] font-extrabold">
+          Custom Card with Arrow Next and Previous Infinite Loop Function
+        </h1>
+        <CustomCardArrowNextPrevInfiniteLoop />
+      </div>
+      <div className=" w-full h-full">
+        <h1 className=" w-full h-[20vh] flex justify-center items-center text-[36px] font-extrabold">
+          Custom Card with Arrow Next Previous and Navigation with Infinite Loop
+          Function
+        </h1>
+        <CustomCardArrowNextNavPrevInfiniteLoop />
       </div>
     </div>
   );
