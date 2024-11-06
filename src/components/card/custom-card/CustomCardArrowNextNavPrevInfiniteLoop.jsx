@@ -709,9 +709,10 @@ const CustomCardArrowNextNavPrevInfiniteLoop = () => {
   ];
 
   const navDiv = useRef(null);
-  const [currentItemIndex, setCurrentItemIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [navDivWidth, setNavDivWidth] = useState(0);
+
+  const [currentItemIndex, setCurrentItemIndex] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   // Get the last four and first four items
   const lastFourItems = products.slice(-4);
@@ -734,7 +735,7 @@ const CustomCardArrowNextNavPrevInfiniteLoop = () => {
           setIsTransitioning(false);
           setCurrentItemIndex(1);
         }, 400);
-      } else if (currentItemIndex === -1) {
+      } else if (currentItemIndex === 0) {
         setTimeout(() => {
           setIsTransitioning(false);
           setCurrentItemIndex(products.length);
@@ -744,24 +745,18 @@ const CustomCardArrowNextNavPrevInfiniteLoop = () => {
   }, [currentItemIndex, isTransitioning, products.length]);
 
   useEffect(() => {
+    // Calculate navigation bar width
     if (navDiv.current) {
-      // Get the total width of the div including padding and border
-      const width = navDiv.current.getBoundingClientRect().width;
-      setNavDivWidth(width);
+      setNavDivWidth(navDiv.current.getBoundingClientRect().width);
     }
   }, [navDiv]);
 
   const eachNavDeivWidth = navDivWidth / products.length + 3;
 
-  console.log("[navDivWidth]", navDivWidth);
-  console.log("[eachNavDeivWidth]", eachNavDeivWidth);
-  console.log("[currentItemIndex]", currentItemIndex);
-  console.log("[products.length]", products.length);
-
   const styles = {
     videoContainer: {
       display: "flex",
-      width: `${(products.length + 8) * 25}%`,
+      width: `${(products.length + 8) * 25}%`, // Account for extra cloned slides
       height: "100%",
       transition: isTransitioning ? "transform 0.4s ease-in-out" : "none",
       transform: `translateX(-${
@@ -782,21 +777,19 @@ const CustomCardArrowNextNavPrevInfiniteLoop = () => {
       backgroundColor: "#007bff",
       borderRadius: "2px",
       transition: "transform 0.4s ease",
-      transform: `translateX(${currentItemIndex * eachNavDeivWidth}%)`, // Shift position per index
+      transform: `translateX(${(currentItemIndex - 1) * eachNavDeivWidth}%)`,
     },
   };
 
   return (
-    <div className="relative w-[100%] h-full max-w-[1440px] mx-auto overflow-hidden pb-10">
+    <div className="relative w-[100%]  h-full max-w-[1440px] mx-auto overflow-hidden pb-10">
       {/* Navigation Line */}
-      <div ref={navDiv} style={styles.navigationLineContainer}>
-        <div style={styles.highlightedLine}></div>
+      <div className=" pb-5">
+        <div ref={navDiv} style={styles.navigationLineContainer}>
+          <div style={styles.highlightedLine}></div>
+        </div>
       </div>
-
-      <div
-        className="relative w-full h-[100%] pt-5"
-        style={styles.videoContainer}
-      >
+      <div className=" relative w-full h-[100%]" style={styles.videoContainer}>
         {/* Render last 4 items at the start */}
         {lastFourItems.map((product, index) => (
           <div
@@ -851,8 +844,6 @@ const CustomCardArrowNextNavPrevInfiniteLoop = () => {
           </div>
         ))}
       </div>
-
-      {/* Navigation Arrows */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between items-center w-full px-5">
         <button
           className="bg-white/50 border-none text-[25px] cursor-pointer rounded-full w-10 h-10 flex items-center justify-center"
@@ -860,6 +851,7 @@ const CustomCardArrowNextNavPrevInfiniteLoop = () => {
         >
           &lt;
         </button>
+
         <button
           className="bg-white/50 border-none text-[25px] cursor-pointer rounded-full w-10 h-10 flex items-center justify-center"
           onClick={handleNext}
