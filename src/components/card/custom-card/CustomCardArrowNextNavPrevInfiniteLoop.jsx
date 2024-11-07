@@ -149,7 +149,9 @@ const CustomCardArrowNextNavPrevInfiniteLoop = () => {
       borderRadius: "2px",
       transition: "transform 0.4s ease",
       transform: `translateX(${
-        eachNavSegmentWidth * (currentItemIndex - 1)
+        currentItemIndex === 0 || currentItemIndex === products.length + 1
+          ? "none"
+          : eachNavSegmentWidth * (currentItemIndex - 1)
       }px)`,
     },
   };
