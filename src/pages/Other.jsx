@@ -1,5 +1,5 @@
 import CustomCardTest from "../components/other/CustomCardTest";
-import CustomCardTestTwo from "../components/other/CustomCardTestTwo";
+import DraggableBox from "../components/other/DraggableBox";
 import LandingPageVideo from "../components/other/LandingPageVideo";
 import LandingPageVideoMulti from "../components/other/LandingPageVideoMulti";
 import LandingPageYT from "../components/other/LandingPageYT";
@@ -18,7 +18,7 @@ const Other = () => {
       <h1 className="text-3xl font-bold underline ">
         Product Card Slider With Single Slider
       </h1>
-      <CustomCardTestTwo />
+      <DraggableBox />
       <h1 className="text-3xl font-bold underline ">Progress Bar Animation</h1>
       <ProgressBarAnimation />
     </div>

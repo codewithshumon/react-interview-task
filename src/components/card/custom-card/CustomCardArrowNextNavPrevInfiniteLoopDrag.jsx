@@ -426,6 +426,8 @@ const CustomCardArrowNextNavPrevInfiniteLoopDrag = () => {
     <div
       className="relative w-[100%] h-full max-w-[1440px] mx-auto overflow-hidden pb-10"
       onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
     >
       {/* Navigation Line */}
       <div className="pb-5 px-10">
